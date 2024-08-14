@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import NetworkTableHeader from './../Components/NetworkTable/NetworkTableHeader';
@@ -21,13 +21,12 @@ const NetworkTableContainer = () => {
   const showReqDetail = state.get('showReqDetail');
 
   const [tableBodyHeight, setTableBodyHeight] = useState(0);
-  const ref = useRef(null);
 
-  useEffect(() => {
-    if (ref?.current) {
-      setTableBodyHeight(ref.current.clientHeight - TABLE_HEADER_HEIGHT);
+  const ref = useCallback((node) => {
+    if (node !== null) {
+      setTableBodyHeight(node.clientHeight - TABLE_HEADER_HEIGHT);
     }
-  }, [ref]);
+  }, [actualData]);
 
   if (error) {
     return (
